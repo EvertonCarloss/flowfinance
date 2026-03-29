@@ -1,0 +1,5 @@
+.container {
+  max-width: 500px;
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-md);
+}

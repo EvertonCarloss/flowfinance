@@ -1,0 +1,26 @@
+:root {
+  /* Cores principais */
+  --color-primary-900: #1e3a8a;
+  --color-primary-700: #1d4ed8;
+  --color-primary-500: #3b82f6;
+
+  /* Status */
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+
+  /* Neutros */
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+
+  --color-text: #111827;
+  --color-text-light: #6b7280;
+  --color-border: #e5e7eb;
+
+  /* Espaçamento */
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  /* Bordas */
+  --radius-md: 8px;
+}

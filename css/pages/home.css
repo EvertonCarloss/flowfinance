@@ -1,0 +1,8 @@
+.summary {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.balance {
+  text-align: center;
+}

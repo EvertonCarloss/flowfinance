@@ -1,0 +1,10 @@
+.header {
+  background: var(--color-primary-900);
+  color: white;
+  text-align: center;
+  padding: var(--spacing-md);
+}
+
+.logo {
+  margin: 0;
+}
