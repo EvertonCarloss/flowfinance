@@ -23,3 +23,8 @@
 .list li span {
   font-weight: 600;
 }
+
+.list li small {
+  color: #888;
+  font-size: 0.8rem;
+}

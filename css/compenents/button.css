@@ -17,7 +17,24 @@ button {
   color: white;
   border: none;
   padding: 4px 8px;
-  margin-left: 10px;
-  border-radius: var(--radius-md);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#clear-btn {
+  background: var(--color-danger);
+  color: white;
+  margin-top: 10px;
+  padding: var(--spacing-sm);
+}
+
+.filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.filter button {
+  padding: 6px 10px;
   cursor: pointer;
 }

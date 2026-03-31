@@ -1,29 +1,24 @@
-import { addTransaction, getTransactions } from './modules/transactions.js';
+import {
+  addTransaction,
+  getTransactions,
+  clearTransactions,
+  removeTransaction,
+} from './modules/transactions.js';
+
 import { renderTransactions, updateBalance } from './modules/ui.js';
-import { removeTransaction } from './modules/transactions.js';
+
+// Estado
+let currentFilter = 'all';
 
 // Seletores
 const form = document.getElementById('transaction-form');
 const textInput = document.getElementById('text');
 const amountInput = document.getElementById('amount');
 const list = document.getElementById('transaction-list');
+const clearBtn = document.getElementById('clear-btn');
+const filterContainer = document.querySelector('.filter');
 
-list.addEventListener('click', function (e) {
-  if (e.target.classList.contains('delete-btn')) {
-    const id = Number(e.target.getAttribute('data-id'));
-
-    console.log('ID clicado:', id, typeof id);
-    removeTransaction(id);
-
-    const transactions = getTransactions();
-    console.log(
-      'ESTADO ATUAL:',
-      transactions.map((t) => [t.id, typeof t.id]),
-    );
-    renderTransactions(transactions);
-    updateBalance(transactions);
-  }
-});
+// FUNÇÕES
 
 function handleAddTransaction(e) {
   e.preventDefault();
@@ -40,15 +35,11 @@ function handleAddTransaction(e) {
     id: Date.now(),
     text,
     amount,
+    date: new Date().toISOString(),
   };
 
   addTransaction(transaction);
-
-  const transactions = getTransactions();
-
-  renderTransactions(transactions);
-  updateBalance(transactions);
-
+  updateUI();
   clearInputs();
 }
 
@@ -57,4 +48,54 @@ function clearInputs() {
   amountInput.value = '';
 }
 
+function applyFilter(transactions) {
+  if (currentFilter === 'income') {
+    return transactions.filter((t) => t.amount > 0);
+  }
+
+  if (currentFilter === 'expense') {
+    return transactions.filter((t) => t.amount < 0);
+  }
+
+  return transactions;
+}
+
+function updateUI() {
+  const transactions = getTransactions();
+  const filtered = applyFilter(transactions);
+
+  renderTransactions(filtered);
+  updateBalance(transactions);
+}
+
+// EVENTOS
+
+// Adicionar
 form.addEventListener('submit', handleAddTransaction);
+
+// Filtro
+filterContainer.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON') {
+    currentFilter = e.target.dataset.filter;
+    updateUI();
+  }
+});
+
+// Remover
+list.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete-btn')) {
+    const id = e.target.dataset.id;
+    removeTransaction(id);
+    updateUI();
+  }
+});
+
+// Limpar tudo
+clearBtn.addEventListener('click', () => {
+  clearTransactions();
+  updateUI();
+});
+
+// INIT
+
+updateUI();

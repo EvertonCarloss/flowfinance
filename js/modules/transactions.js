@@ -1,20 +1,43 @@
-// Cuidando dos Dados
+// IMPORTS
 
-let transactions = [];
+import { saveTransactions, loadTransactions } from './storage.js';
+
+// STATE
+
+let transactions = loadTransactions();
+
+// GETTERS
 
 export function getTransactions() {
-  return transactions;
+  // retorna cópia para evitar mutação externa
+  return [...transactions];
 }
 
+// ACTIONS
+
 export function addTransaction(transaction) {
-  transactions.push(transaction);
+  transactions = [...transactions, transaction];
+  persist();
 }
 
 export function removeTransaction(id) {
-  console.log('ANTES:', transactions);
+  transactions = transactions.filter((t) => String(t.id) !== String(id));
 
-  transactions = transactions.filter((t) => t.id != id);
+  persist();
+}
 
-  console.log('REMOVENDO ID:', id);
-  console.log('DEPOIS:', transactions);
+export function clearTransactions() {
+  transactions = [];
+  persist(true);
+}
+
+// PERSISTÊNCIA
+
+function persist(clear = false) {
+  if (clear) {
+    localStorage.removeItem('flowfinance_transactions');
+    return;
+  }
+
+  saveTransactions(transactions);
 }
